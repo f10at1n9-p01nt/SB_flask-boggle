@@ -1,0 +1,33 @@
+body {
+	background-color: #f2f0f1;
+}
+
+h1 {
+	text-align: center;
+}
+
+.grid {
+	display: grid;
+	width: 80%;
+	margin: auto;
+	grid-template-columns: auto auto auto auto auto;
+	grid-template-columns: auto auto auto auto auto;
+	gap: 0.6em;
+	padding: 10px;
+	background-color: #c6bebc;
+	color: #d0d0b4;
+	border-radius: 0.5em;
+}
+
+.letter {
+	border: 2px solid black;
+	background-color: #165c58;
+	padding: 4px;
+	text-align: center;
+	font-size: 3em;
+	border-radius: 0.4em;
+}
+
+form {
+	padding: 10px;
+}
