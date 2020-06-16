@@ -1,14 +1,26 @@
 function displayResult(result) {
 	$('.result').html(result);
 }
+// score = 0;
 
-function scoreWord(validity, word) {
+// function scoreWord(validity, word) {
+// 	if (validity === 'ok') {
+// 		return (score += word.length);
+// 	}
+// 	return score;
+// }
+// Testing memoization. Not a great idea if running multiple games.
+function scoreWord(validity, word, reset) {
+	if (!scoreWord.score || reset === true) {
+		scoreWord.score = 0;
+	}
+
 	if (validity !== 'ok') {
-		return;
+		return scoreWord.score;
 	}
-	if (!scoreWord.score) {
-		scoreWord.score = {};
-	}
+
+	scoreWord.score += word.length;
+	return scoreWord.score;
 }
 
 async function checkGuess() {
