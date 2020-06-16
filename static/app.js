@@ -1,6 +1,11 @@
-function displayResult(result) {
-	$('.result').html(result);
+guessedWords = [];
+// const timerInstance = new easytimer.Timer();
+const timer = new Timer();
+
+function displayResult(result, displayClass) {
+	$(`.${displayClass}`).html(result);
 }
+
 // score = 0;
 
 // function scoreWord(validity, word) {
@@ -23,11 +28,34 @@ function scoreWord(validity, word, reset) {
 	return scoreWord.score;
 }
 
-async function checkGuess() {
+async function guessHandler() {
+	console.log(guessedWords);
 	const word_value = $('#guess').val();
 	const res = await axios.get('/check-word', { params: { word_value } });
-	displayResult(res.data);
+
+	displayResult(res.data, 'word-message');
+	// Check if word already played
+	// Todo: Display message if already played and ok
+	if (!guessedWords.includes(word_value) && res.data === 'ok') {
+		guessedWords.push(word_value);
+		displayResult(scoreWord(res.data, word_value, false), 'score');
+	}
+
+	$('form').trigger('reset');
 	return res.data;
 }
 
-$('button').on('click', checkGuess);
+$('button').on('click', guessHandler);
+
+// Followed easytimer docs
+timer.start({ countdown: true, startValues: { seconds: 5 } });
+$('.timer').html(timer.getTimeValues().toString());
+
+timer.addEventListener('secondsUpdated', function(e) {
+	$('.timer').html(timer.getTimeValues().toString());
+});
+
+timer.addEventListener('targetAchieved', function(e) {
+	$('form').hide();
+	$('.timer').html('Game Over!');
+});
