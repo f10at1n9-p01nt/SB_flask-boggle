@@ -45,10 +45,18 @@ async function guessHandler() {
 	return res.data;
 }
 
+async function storeGameStats() {
+	let score;
+	$('.score').html() ? (score = $('.score').html()) : (score = 0);
+	console.log(score);
+	const gamesPlayed = await axios.post('/stats', { game_score: score });
+	console.log(gamesPlayed);
+}
+
 $('button').on('click', guessHandler);
 
 // Followed easytimer docs
-timer.start({ countdown: true, startValues: { seconds: 5 } });
+timer.start({ countdown: true, startValues: { seconds: 10 } });
 $('.timer').html(timer.getTimeValues().toString());
 
 timer.addEventListener('secondsUpdated', function(e) {
@@ -58,4 +66,5 @@ timer.addEventListener('secondsUpdated', function(e) {
 timer.addEventListener('targetAchieved', function(e) {
 	$('form').hide();
 	$('.timer').html('Game Over!');
+	storeGameStats();
 });
