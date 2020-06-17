@@ -36,12 +36,14 @@ def validate_word():
 @app.route('/stats', methods=["POST"])
 def update_stats():
     score = request.json['game_score']
-    # Why do I have to use get and not same as validate_word board
+    # ? Why do I have to use get and not same as validate_word board
+    # games_played = session['games_played']
+    # high_score = session['high_score']
     games_played = session.get('games_played', 0)
     high_score = session.get('high_score', 0)
     games_played += 1
     session['games_played'] = games_played
-    if int(score) > high_score:
+    if int(score) > int(high_score):
         high_score = score
     session['high_score'] = high_score
     return jsonify(games_played)

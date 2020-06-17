@@ -16,6 +16,7 @@ function displayResult(result, displayClass) {
 // }
 // Testing memoization. Not a great idea if running multiple games.
 function scoreWord(validity, word, reset) {
+	// ? Why can I use scoreWord.score?
 	if (!scoreWord.score || reset === true) {
 		scoreWord.score = 0;
 	}
